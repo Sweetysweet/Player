@@ -4,6 +4,7 @@ const prevBtn = document.querySelector('#prev');
 const nextBtn = document.querySelector('#next');
 const repeatBtn = document.querySelector('#rep');
 
+const shuffleBtn = document.querySelector('#shuffle');
 const volumeSlider = document.querySelector('#volume');
 const audio = document.querySelector('#audio');
 const time = document.querySelector('#time');
@@ -19,8 +20,11 @@ const songs = ['hey', 'summer', 'ukulele', 'nomy'];
 // индекс трека, который будет запускаться первым
 let songIndex = 0;
 let repeat = false;
+let shuffle = false;
+
 audio.loop = false;
 loadSong(songs[songIndex]);
+
 // загрузка песни
 function loadSong(song) {
     title.innerHTML = song;
@@ -94,6 +98,25 @@ function nextSong() {
     loadSong(songs[songIndex]);
     playSong();
 }
+
+// shuffle Song 
+function shuffleSong() {
+    let shuffleSounds = songs[Math.floor(Math.random() * songs.length)];
+    shuffleBtn.classList.toggle('active');
+
+    if (shuffleSounds && shuffleBtn.classList.contains('active')) {
+        console.log(`пришла песня - ${shuffleSounds}`);
+        title.innerHTML = shuffleSounds;
+        songName.innerHTML = `трек - ${shuffleSounds}`;
+        audio.src = `music/${shuffleSounds}.mp3`;
+        logoSong.src = `img/${shuffleSounds}.jpg`;
+        shuffle = true;
+        playSong();
+    } else {
+        console.log('Shuffle off')
+    }
+}
+
 // repeat
 function repeatSong() {
     repeatBtn.classList.toggle('active');
@@ -141,11 +164,13 @@ prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 repeatBtn.addEventListener('click', repeatSong);
 
+
+shuffleBtn.addEventListener('click', shuffleSong);
 audio.addEventListener('timeupdate', updateProgress);
 progressContainer.addEventListener('click', setProgress);
 
-// true <-> false;
-if (!repeat) {
+// true <-> true;
+if (!repeat || !shuffle) {
     audio.addEventListener('ended', nextSong);
 } else {
     audio.addEventListener('ended', repeatSong);
