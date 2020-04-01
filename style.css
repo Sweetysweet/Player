@@ -134,7 +134,7 @@ body {
 
 #duration {
     position: relative;
-    left: 250px;
+    left: 382px;
 }
 
 .progress-container {
@@ -153,3 +153,32 @@ body {
     width: 0%;
     transition: width 0.1s linear;
 }
+
+#volume {
+    -webkit-appearance: none;
+    margin: 18px 0;
+    width: 100%;
+}
+
+#volume:focus {
+    outline: none;
+}
+
+#volume::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: #fe8daa;
+    border-radius: 2px;
+}
+
+#volume::-webkit-slider-thumb {
+    border: 1px solid #000000;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -4px;
+}    

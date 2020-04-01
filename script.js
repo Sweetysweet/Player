@@ -4,6 +4,7 @@ const prevBtn = document.querySelector('#prev');
 const nextBtn = document.querySelector('#next');
 const repeatBtn = document.querySelector('#rep');
 
+const volumeSlider = document.querySelector('#volume');
 const audio = document.querySelector('#audio');
 const time = document.querySelector('#time');
 const duration = document.querySelector('#duration');
@@ -34,6 +35,7 @@ function loadSong(song) {
     } else {
         songName.innerHTML = `трек - ${song}`;
     }
+    audio.volume = volumeSlider.value;
     setTimeout(showDuration, 1000);
     time.innerHTML = convertTime(Math.round(audio.currentTime));
 }
@@ -102,7 +104,6 @@ function repeatSong() {
     }
 }
 
-
 // прогресс бар
 function updateProgress(e) {
     const {duration, currentTime} = e.srcElement;
@@ -128,12 +129,21 @@ playBtn.addEventListener('click', () => {
     }
 });
 
+function adjustVolume() {
+    audio.volume = volumeSlider.value;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    audio.volume = 0.2;
+}, false)
+
 prevBtn.addEventListener('click', prevSong);
 nextBtn.addEventListener('click', nextSong);
 repeatBtn.addEventListener('click', repeatSong);
 
 audio.addEventListener('timeupdate', updateProgress);
 progressContainer.addEventListener('click', setProgress);
+
 // true <-> false;
 if (!repeat) {
     audio.addEventListener('ended', nextSong);
