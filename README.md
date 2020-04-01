@@ -5,3 +5,4 @@ Switch songs
 Progress bar
 CurrentTime
 DurationTime
+Volume Control
