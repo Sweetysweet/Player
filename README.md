@@ -4,4 +4,4 @@ Add play and pause functionality
 Switch songs
 Progress bar
 CurrentTime
-DuratiomTime
+DurationTime
