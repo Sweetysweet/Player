@@ -29,7 +29,7 @@ function loadSong(song) {
         songName.innerHTML = `трек - ${song}`;
     } else if (song === 'summer') {
         songName.innerHTML = `трек - ${song}`;
-    } else if (song === 'summer') {
+    } else if (song === 'ukulele') {
         songName.innerHTML = `трек - ${song}`;
     } else {
         songName.innerHTML = `трек - ${song}`;
