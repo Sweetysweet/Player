@@ -6,3 +6,4 @@ Progress bar
 CurrentTime
 DurationTime
 Volume Control
+Shuffle tracks
