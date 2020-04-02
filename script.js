@@ -15,30 +15,23 @@ const title = document.querySelector('#title');
 const logoSong = document.querySelector('#cover');
 const songName = document.querySelector('h1');
 
-const songs = ['hey', 'summer', 'ukulele', 'nomy'];
+const songs = ['Monster', 'Everybody Get Up', 'Youre Gonna Go Far, Kid', 'Adams song'];
+const author = ['Skillet', 'Five', 'The Offspring', 'Blink-182'];
 
 // индекс трека, который будет запускаться первым
 let songIndex = 0;
+let authorIndex = 0;
 let repeat = false; // repeat off
 let shuffle = false; // shuffle off
-let wave = false; // canvas off
 audio.loop = false;
-loadSong(songs[songIndex]);
+loadSong(author[authorIndex], songs[songIndex], );
 
 // загрузка песни
-function loadSong(song) {
-    title.innerHTML = song;
+function loadSong(author, song) {
+    title.innerHTML = `${author} - ${song}`;
     audio.src = `music/${song}.mp3`;
-    logoSong.src = `img/${song}.jpg`;
-    if (song === 'hey') {
-        songName.innerHTML = `трек - ${song}`;
-    } else if (song === 'summer') {
-        songName.innerHTML = `трек - ${song}`;
-    } else if (song === 'ukulele') {
-        songName.innerHTML = `трек - ${song}`;
-    } else {
-        songName.innerHTML = `трек - ${song}`;
-    }
+    logoSong.src = `img/${author}.jpg`;
+    songName.innerHTML = `${song}`;
     audio.volume = volumeSlider.value;
     setTimeout(showDuration, 1000);
     time.innerHTML = convertTime(Math.round(audio.currentTime));
@@ -82,35 +75,41 @@ function pauseSong() {
 // запуск предыдущей трека
 function prevSong() {
     songIndex--;
-    if (songIndex < 0) {
+    authorIndex--;
+    if (songIndex && authorIndex < 0) {
         songIndex = songs.length - 1;
+        authorIndex = author.length - 1;
     }
-    loadSong(songs[songIndex]);
+    loadSong(author[authorIndex], songs[songIndex]);
     playSong()
 }
 
 // запуск следующей трека
 function nextSong() {
     songIndex++;
-    if (songIndex > songs.length -1) {
+    authorIndex++;
+    if (songIndex > songs.length -1 && authorIndex > author.length - 1) {
         songIndex = 0;
+        authorIndex = 0;
     }
     
-    loadSong(songs[songIndex]);
+    loadSong(author[authorIndex], songs[songIndex]);
     playSong();
 }
 
 // shuffle Song 
-function shuffleSong() {
+function shuffleSong(song, name, music) {
     shuffleBtn.classList.toggle('active');
     shuffle = true;
     if (shuffleBtn.classList.contains('active')) {
     let shuffleSounds = songs[Math.floor(Math.random() * songs.length)];
-        console.log(`пришла песня - ${shuffleSounds}, shuffle - ${shuffle}`);
-        title.innerHTML = shuffleSounds;
-        songName.innerHTML = `трек - ${shuffleSounds}`;
+        title.innerHTML = `${shuffleSounds}`;
+        songName.innerHTML = `${shuffleSounds}`;
         audio.src = `music/${shuffleSounds}.mp3`;
-        logoSong.src = `img/${shuffleSounds}.jpg`;
+        logoSong.src = `img/random.jpg`;
+        if (song === name) {
+            audio.src = `music/${music}.mp3`; 
+        }
         shuffle = true;
         playSong();
     } else {
@@ -145,7 +144,6 @@ function setProgress(e) {
 
 playBtn.addEventListener('click', () => {
     const isPlaying = musicContainer.classList.contains('play');
-
     if (isPlaying) {
         pauseSong();
     } else {
@@ -183,6 +181,8 @@ function waveSong(){
     window.onresize = function() {
         w = canvas.width = innerWidth;
         h = canvas.height = innerHeight;
+        widthContainer = musicContainer.width = innerWidth;
+        heightContainer = musicContainer.height = innerHeight
         init();
     }
 
@@ -205,7 +205,6 @@ function waveSong(){
         }
 
         draw() {
-
             let s = (1 - Math.abs(Math.sin(this.scale))); // scale
             let o = (1 - s) *255; // other color
             let r = this.radius * s; // локальный радиус * scale
