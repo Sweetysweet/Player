@@ -101,16 +101,16 @@ function nextSong() {
 
 // shuffle Song 
 function shuffleSong() {
-    let shuffleSounds = songs[Math.floor(Math.random() * songs.length)];
     shuffleBtn.classList.toggle('active');
-
-    if (shuffleSounds && shuffleBtn.classList.contains('active')) {
-        console.log(`пришла песня - ${shuffleSounds}`);
+    shuffle = true;
+    if (shuffleBtn.classList.contains('active')) {
+    let shuffleSounds = songs[Math.floor(Math.random() * songs.length)];
+        console.log(`пришла песня - ${shuffleSounds}, shuffle - ${shuffle}`);
         title.innerHTML = shuffleSounds;
         songName.innerHTML = `трек - ${shuffleSounds}`;
         audio.src = `music/${shuffleSounds}.mp3`;
         logoSong.src = `img/${shuffleSounds}.jpg`;
-        shuffle = true;
+        shuffle = false;
         playSong();
     } else {
         console.log('Shuffle off')
@@ -170,8 +170,15 @@ audio.addEventListener('timeupdate', updateProgress);
 progressContainer.addEventListener('click', setProgress);
 
 // true <-> true;
-if (!repeat || !shuffle) {
+if (!repeat) {
     audio.addEventListener('ended', nextSong);
 } else {
     audio.addEventListener('ended', repeatSong);
+}
+if (!shuffle) {
+    audio.addEventListener('ended', nextSong);
+    console.log(`shuffle отключён: ${shuffle}`);
+} else {
+    audio.addEventListener('ended', shuffleSong);
+    console.log(`shuffle включён: ${shuffle}`);
 }
