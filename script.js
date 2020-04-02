@@ -14,7 +14,6 @@ const progressContainer = document.querySelector('#progress-container');
 const title = document.querySelector('#title');
 const logoSong = document.querySelector('#cover');
 const songName = document.querySelector('h1');
-const playListContainer = document.querySelector('#playlist-container');
 
 const songs = ['hey', 'summer', 'ukulele', 'nomy'];
 
